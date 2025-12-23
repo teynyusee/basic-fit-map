@@ -1,7 +1,7 @@
-import { GymCanvas } from "../canvas/GymCanvas";
 import { SceneContents } from "./SceneContents";
 import type { ZoneId } from "../../data/zones";
 import type { MachineType } from "../../data/machines";
+import { GymCanvas } from "../canvas/GymCanvas";
 
 export function MapScene({
   activeZone,
@@ -12,7 +12,6 @@ export function MapScene({
   viewFactor: number;
   onMachineSelect: (machine: MachineType) => void;
 }) {
-
   return (
     <GymCanvas>
       <SceneContents

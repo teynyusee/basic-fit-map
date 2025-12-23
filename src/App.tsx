@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { MapScene } from "./components/scenes/MapScene";
 import { NavBar } from "./components/ui/NavBar";
+import { MachineInfoPanel } from "./components/ui/MachineInfoPanel";
 import type { ZoneId } from "./data/zones";
 import { CAMERA_NAMES } from "./data/cameras";
-import { MACHINES } from "./data/machines";
-import type { MachineType } from "./data/machines";
-
+import type { MachineConfig } from "./data/machines";
 
 export default function App() {
   const [activeZone, setActiveZone] = useState<ZoneId>("overview");
-  const [selectedMachine, setSelectedMachine] = useState<MachineType | null>(null);
-
+  const [selectedMachine, setSelectedMachine] =
+    useState<MachineConfig | null>(null);
 
   const [zoneViewFactors, setZoneViewFactors] = useState<
     Record<ZoneId, number>
@@ -24,20 +23,12 @@ export default function App() {
 
   function handleZoneChange(zone: ZoneId) {
     setActiveZone(zone);
-
-    // 🔹 slider altijd resetten bij binnenkomen zone
-    setZoneViewFactors((prev) => ({
-      ...prev,
-      [zone]: 0,
-    }));
+    setZoneViewFactors((prev) => ({ ...prev, [zone]: 0 }));
   }
 
   return (
     <>
-      <NavBar
-        activeZone={activeZone}
-        onZoneChange={handleZoneChange}
-      />
+      <NavBar activeZone={activeZone} onZoneChange={handleZoneChange} />
 
       {CAMERA_NAMES[activeZone].views && (
         <input
@@ -68,48 +59,10 @@ export default function App() {
         onMachineSelect={setSelectedMachine}
       />
 
-{selectedMachine && (
-  <div
-    style={{
-      position: "absolute",
-      right: 20,
-      top: 80,
-      width: 300,
-      background: "rgba(0,0,0,0.85)",
-      color: "#fff",
-      padding: "1rem",
-      borderRadius: 14,
-      zIndex: 30,
-    }}
-  >
-    <h3>{MACHINES[selectedMachine].title}</h3>
-    <p>{MACHINES[selectedMachine].description}</p>
-
-    <p><strong>Calorieën:</strong> {MACHINES[selectedMachine].calories}</p>
-
-    <p><strong>Spieren:</strong> {MACHINES[selectedMachine].muscles.join(", ")}</p>
-
-    <ul>
-      {MACHINES[selectedMachine].tips.map((tip) => (
-        <li key={tip}>{tip}</li>
-      ))}
-    </ul>
-
-    <button
-      onClick={() => setSelectedMachine(null)}
-      style={{
-        marginTop: "0.5rem",
-        width: "100%",
-        padding: "0.4rem",
-        borderRadius: 8,
-        border: "none",
-        cursor: "pointer",
-      }}
-    >
-      Sluiten
-    </button>
-  </div>
-)}
+      <MachineInfoPanel
+        machine={selectedMachine}
+        onClose={() => setSelectedMachine(null)}
+      />
     </>
   );
 }

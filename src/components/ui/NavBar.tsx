@@ -5,7 +5,13 @@ type NavBarProps = {
   onZoneChange: (zone: ZoneId) => void;
 };
 
-export function NavBar({ activeZone, onZoneChange }: NavBarProps) {
+export function NavBar({
+  activeZone,
+  onZoneChange,
+}: {
+  activeZone: ZoneId;
+  onZoneChange: (zone: ZoneId) => void;
+}) {
   return (
     <nav
       style={{

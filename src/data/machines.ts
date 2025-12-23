@@ -1,38 +1,39 @@
-export type MachineType = "treadmill" | "stairstepper";
-
-
-export interface Machine {
+export type MachineConfig = {
   id: string;
-  title: string;
-  description: string;
-  muscles: string[];
-  calories: string;
-  tips: string[];
-}
+  meshName: string;
+  zone: "overview" | "cardio" | "strength" | "free" | "dumbbells";
+  info: {
+    title: string;
+    description: string;
+  };
+};
 
-export const MACHINES = {
-  treadmill: {
+export const MACHINES: MachineConfig[] = [
+  {
     id: "treadmill",
-    title: "Treadmill",
-    description: "Cardio toestel voor wandelen en lopen.",
-    muscles: ["benen", "cardio"],
-    calories: "500–700 kcal / uur",
-    tips: [
-      "Begin met 5 minuten wandelen",
-      "Houd je houding recht",
-      "Gebruik incline voor extra intensiteit"
-    ],
+    meshName: "SM__TreadMill__main",
+    zone: "cardio",
+    info: {
+      title: "Treadmill",
+      description: "Ideaal voor cardio en conditie.",
+    },
   },
-  stairstepper: {
-    id: "stairstepper",
-    title: "Stair Stepper",
-    description: "Toestel dat de beweging van traplopen simuleert.",
-    muscles: ["benen", "billen", "cardio"],
-    calories: "400–600 kcal / uur",
-    tips: [
-      "Houd je rug recht tijdens het trainen",
-      "Gebruik de handgrepen voor balans, niet om jezelf omhoog te trekken",
-      "Varieer je snelheid voor een betere workout"
-    ],
+  {
+    id: "stepper",
+    meshName: "machine__stepper__main",
+    zone: "cardio",
+    info: {
+      title: "Stair Stepper",
+      description: "Versterkt benen en billen.",
+    },
   },
-} satisfies Record<MachineType, Machine>;
+  {
+    id: "eleptical__trainer",
+    meshName: "SM__Eleptical__Trainer__main",
+    zone: "cardio",
+    info: {
+      title: "Roeimachine",
+      description: "Volledige lichaamstraining.",
+    },
+  },
+];
